@@ -54,7 +54,7 @@ const editorDefaults = {
   language: 'javascript',
   theme: 'vs-dark',
   formatOnType: false,
-  fontSize: 16,
+  fontSize: 14,
   tabSize: 2,
   lineNumbersMinChars: 3,
   minimap: {
