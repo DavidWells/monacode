@@ -101,6 +101,7 @@ export default (options) => {
       const prettyVal = prettier.formatWithCursor(val, {
         parser: 'babel',
         plugins: prettierBabel,
+        semi: false,
         cursorOffset: computeOffset(val, pos),
       });
 
