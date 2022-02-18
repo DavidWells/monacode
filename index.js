@@ -108,7 +108,7 @@ export default (options) => {
         semi: false,
         singleQuote: true,
         jsxSingleQuote: true,
-        printWidth: 120,
+        printWidth: 100,
         cursorOffset: computeOffset(val, pos),
       });
 
