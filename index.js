@@ -17,8 +17,9 @@ self.MonacoEnvironment = {
     if (label === 'json') return './src/monaco/language/json/json.worker.js';
     if (label === 'css') return './src/monaco/language/css/css.worker.js';
     if (label === 'html') return './src/monaco/language/html/html.worker.js';
-    if (label === 'typescript' || label === 'javascript')
+    if (label === 'typescript' || label === 'javascript') {
       return './src/monaco/language/typescript/ts.worker.js';
+    }
     return './src/monaco/editor/editor.worker.js';
   },
 };
@@ -48,12 +49,9 @@ const computePosition = (code, offset) => {
   return { lineNumber: line, column: col };
 };
 
-const urlSearchParams = new URLSearchParams(window.location.search);
-const params = Object.fromEntries(urlSearchParams.entries());
-
 const editorDefaults = {
   value: '',
-  language: params.l || params.lang || params.language || 'javascript',
+  language: 'javascript',
   theme: 'vs-dark',
   formatOnType: false,
   fontSize: 16,
@@ -71,10 +69,13 @@ const editorDefaults = {
 export default (options) => {
   const { container, ...restOfOptions } = options;
 
-  const editor = monaco.editor.create(container, {
+  const editorOpts = {
     ...editorDefaults,
     ...restOfOptions,
-  });
+  }
+  console.log('editorOpts', editorOpts)
+
+  const editor = monaco.editor.create(container, editorOpts);
 
   // Import themes directly from the amazing collection by @brijeshb42
   // https://raw.githubusercontent.com/brijeshb42/monaco-themes/master/themes
@@ -105,6 +106,9 @@ export default (options) => {
         parser: 'babel',
         plugins: prettierBabel,
         semi: false,
+        singleQuote: true,
+        jsxSingleQuote: true,
+        printWidth: 120,
         cursorOffset: computeOffset(val, pos),
       });
 
