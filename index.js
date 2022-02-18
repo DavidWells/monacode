@@ -102,15 +102,24 @@ export default (options) => {
       const val = editor.getValue();
       const pos = editor.getPosition();
 
-      const prettyVal = prettier.formatWithCursor(val, {
-        parser: 'babel',
-        plugins: prettierBabel,
-        semi: false,
-        singleQuote: true,
-        jsxSingleQuote: true,
-        printWidth: 100,
-        cursorOffset: computeOffset(val, pos),
-      });
+      let prettyVal = {}
+      if (editorOpts.language === 'json') {
+        prettyVal = {
+          formatted: JSON.stringify(JSON.parse(val), null, 2),
+          cursorOffset: computeOffset(val, pos)
+        }
+      } else {
+        console.log('val', val)
+        prettyVal = prettier.formatWithCursor(val, {
+          parser: 'babel',
+          plugins: prettierBabel,
+          semi: false,
+          singleQuote: true,
+          jsxSingleQuote: true,
+          printWidth: 100,
+          cursorOffset: computeOffset(val, pos),
+        });
+      }
 
       editor.executeEdits('prettier', [
         {
