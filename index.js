@@ -48,9 +48,12 @@ const computePosition = (code, offset) => {
   return { lineNumber: line, column: col };
 };
 
+const urlSearchParams = new URLSearchParams(window.location.search);
+const params = Object.fromEntries(urlSearchParams.entries());
+
 const editorDefaults = {
   value: '',
-  language: 'typescript',
+  language: params.l || params.lang || params.language || 'javascript',
   theme: 'vs-dark',
   formatOnType: false,
   fontSize: 16,
